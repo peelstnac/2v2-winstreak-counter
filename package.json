@@ -1,0 +1,25 @@
+{
+  "name": "2v2-winstreak-counter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peelstnac/2v2-winstreak-counter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peelstnac/2v2-winstreak-counter/issues"
+  },
+  "homepage": "https://github.com/peelstnac/2v2-winstreak-counter#readme",
+  "dependencies": {
+    "@varandas/clash-royale-api": "^1.1.5",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0"
+  }
+}
