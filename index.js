@@ -11,6 +11,8 @@ const p2 = process.env.PLAYER_TWO;
 
 const history = JSON.parse(fs.readFileSync('history.json'));
 var ws = 0;
+var wins = 0;
+var loss = 0;
 
 // Initial ws calculation
 for (const battle of history.matches) {
@@ -19,6 +21,13 @@ for (const battle of history.matches) {
         continue;
     }
     break;
+}
+
+// Initial W/L calculation
+for (const battle of history.matches) {
+    if (battle.team[0].crowns > battle.opponent[0].crowns) {
+        wins++;
+    } else loss++;
 }
 
 // Poll API
@@ -62,8 +71,14 @@ const convertDate = (str) => {
 
 const update = (battle) => {
     const win = (battle.team[0].crowns > battle.opponent[0].crowns);
-    if (win) ws++;
-    if (!win) ws = 0;
+    if (win) {
+        ws++;
+        wins++;
+    }
+    if (!win) {
+        ws = 0;
+        loss++;
+    }
     const n1 = battle.team[0].name;
     const n2 = battle.team[1].name;
     const n3 = battle.opponent[0].name;
@@ -74,7 +89,7 @@ const update = (battle) => {
     const message = {
         embed: {
             title: `[${n1} + ${n2}] Vs. [${n3} + ${n4}]`,
-            description: `${win ? 'WIN' : 'LOSS'}. Current win streak: ${ws}`,
+            description: `${win ? 'WIN' : 'LOSS'}. Current win streak: ${ws}. W/L is ${wins}/${loss}.`,
             color: win ? green : red,
             fields: []
         }
@@ -86,7 +101,7 @@ const update = (battle) => {
 const cid = '870423804139163690';
 
 client.on('ready', () => {
-    client.channels.cache.get(cid).send(`Bot online, current streak: ${ws}`);
+    client.channels.cache.get(cid).send(`Bot online, current streak: ${ws}. W/L is ${wins}/${loss}.`);
 });
 
 client.login(process.env.BOT_TOKEN);
